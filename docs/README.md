@@ -1,6 +1,6 @@
 ---
 home: true
-heroImage: /images.png
+heroImage: /cute.gif
 actionText: Get to know me
 actionLink: /blogs
 footer:

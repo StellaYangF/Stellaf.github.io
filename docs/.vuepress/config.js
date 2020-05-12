@@ -8,7 +8,7 @@ module.exports = {
   head: [
     [
       "link",
-      { rel: "shortcut icon", type: "image/x-icon", href: "/images.png" },
+      { rel: "shortcut icon", type: "image/x-icon", href: "/cute.gif" },
     ],
   ],
   themeConfig: {
