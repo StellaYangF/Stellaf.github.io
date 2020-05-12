@@ -13,8 +13,8 @@
 ## 专业技能
 - 熟悉 `JavaScript`
 - 熟悉 `Vue.js`
-- 了解 `Node.js`
-- 了解 `Webpack`
+- 熟悉 `Node.js`
+- 熟悉 `Webpack`
 
 ## 工作履历
 - 公司名称：武汉乡聚信息产业有限公司
