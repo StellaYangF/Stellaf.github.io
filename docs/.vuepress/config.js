@@ -1,42 +1,17 @@
+const nav = require("./links/nav.js");
+
 module.exports = {
-  title: "XJ-UI",
-  description: "自定义组件库",
-  dest: "./build",
-  port: 1234,
-
-  // element
+  title: "Hi, I'm here",
+  description: "Stella Blog",
+  dest: "./stella",
+  base: "/stella/",
   head: [
-    [ 'link', { rel: 'icon', href: '/logo.png'} ]
-  ],
-
-  // language
-  // locales: {
-  //   '/': {
-  //     lang: 'en-US',
-  //     description: 'Custom Component'
-  //   },
-  //   '/zh/': {
-  //     lang: 'zh-CN',
-  //     description: '自定义组件库'
-  //   },
-  // },
-
-  // navbar
-  themeConfig: {
-    nav: [
-      {
-        text: "首页",
-        link: "/",
-      },
-      {
-        text: "自定义组件库",
-        link: "/components/my-button",
-      },
+    [
+      "link",
+      { rel: "shortcut icon", type: "image/x-icon", href: "/images.png" },
     ],
-    sidebar: {
-      "/components/": [
-        ['my-button', '按钮'],
-      ],
-    },
+  ],
+  themeConfig: {
+    nav,
   },
 };

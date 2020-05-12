@@ -1,8 +1,7 @@
 ---
 home: true
-actionText: welcome →
-actionLink: /components/my-button
-features:
-- title: consolidate
-  details: stable
+heroImage: /images.png
+actionText: Get to know me
+actionLink: /blogs
+footer:
 ---
