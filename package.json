@@ -18,7 +18,7 @@
     "vuepress": "^1.4.0"
   },
   "dependencies": {
-    "@stella2/xj-ui": "^0.2.0",
+    "@stella2/xj-ui": "^0.2.1",
     "core-js": "^2.6.11",
     "element-ui": "^2.13.0",
     "highlight.js": "^9.18.1",
