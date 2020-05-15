@@ -1,14 +1,14 @@
 {
-  "name": "xj-ui-docs",
+  "name": "stella-blog",
   "version": "1.0.0",
-  "description": "",
+  "description": "This is Stella's blog.",
   "main": "index.js",
   "scripts": {
     "docs:dev": "vuepress dev docs",
     "docs:build": "vuepress build docs"
   },
-  "keywords": [],
-  "author": "",
+  "keywords": ["blog"],
+  "author": "Stella",
   "license": "ISC",
   "devDependencies": {
     "@commitlint/cli": "^8.3.5",
