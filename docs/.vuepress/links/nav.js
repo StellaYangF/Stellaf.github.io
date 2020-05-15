@@ -4,6 +4,10 @@ module.exports = [
     link: "/",
   },
   {
+    text: "Study",
+    link: "/study",
+  },
+  {
     text: "Blogs",
     link: "/blogs",
   },

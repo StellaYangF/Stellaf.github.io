@@ -12,7 +12,8 @@ Being a Front-ender, keeping learning is great of importance. Therefore, the aut
 - [Axios Analysis](https://juejin.im/post/5e4aac426fb9a07c7b782a14)
 
 ### Vue.js
-- Vuex
+- [Vuex Analysis](https://juejin.im/post/5ebe0700f265da7bb46be0ce)
+  - [Vuex Plugins](https://juejin.im/post/5ebe4157f265da7bce269648)
 - Router
 - Reactive
 
@@ -32,6 +33,15 @@ Being a Front-ender, keeping learning is great of importance. Therefore, the aut
 - Cookie
 - Cache
 - Performance
+
+### Security vulnerability
+- type
+  - CSRF
+  - XXS 
+
+- solutions
+  - encodeURI
+  - token
 
 ### Packages Build
 - **CLI** [@stella2/xj-cli](https://www.npmjs.com/package/@stellastella/xj-cli)
