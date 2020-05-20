@@ -224,7 +224,7 @@ init(app) {
     
   history.listen(route => app._route = route)
 }
-````
+```
 :::
 </highlight>
 
@@ -246,7 +246,7 @@ init(app) {
 beforeEach(cb) {
   this.beforeEaches.push(cb);
 }
-````
+```
 :::
 </highlight>
 
@@ -428,11 +428,9 @@ Vue.component('RouterLink', Link);
 ```js
 import { createRouteMap } from "./create-route-map";
 import { createRoute } from './history/base';
-````
+```
 :::
-<highlight>
-
-
+</highlight>
 
 #### 导出 createMatcher 函数
 内部实现两个函数，并返回包含这两个函数的对象
@@ -460,10 +458,9 @@ export function createMatcher(routes, router) {
     match,
   }
 }
-````
+```
 :::
-<highlight>
-
+</highlight>
 
 > Tip: 这里运用闭包，createMatcher 函数作用域体内，声明并初始化了两个常量，`pathList`, `pathMap`，返回的两个函数内部都访问了当前这个作用域内的变量
 由于内层作用域访问外层作用域内的变量，其他无法释放，就形成闭包。
@@ -493,11 +490,9 @@ export interface RouteConfig {
   caseSensitive?: boolean
   pathToRegexpOptions?: PathToRegexpOptions
 }
-````
+```
 :::
-<highlight>
-
-
+</highlight>
 
 流程：
 - 内部声明两个变量 `pathList`, `pathMap`
@@ -519,11 +514,9 @@ export function createRouteMap(routes, oldPathList, oldPathMap) {
     pathMap,
   }
 }
-````
+```
 :::
-<highlight>
-
-
+</highlight>
 
 #### 辅助函数 addRouteRecord
 流程：
@@ -556,11 +549,9 @@ function addRouteRecord(pathList, pathMap, route, parent) {
     route.children.forEach(route => addRouteRecord(pathList, pathMap, route, record))
   }
 }
-````
+```
 :::
-<highlight>
-
-
+</highlight>
 
 ### components
 提供两个全局的组件，两者都是函数式组件
@@ -582,10 +573,9 @@ function addRouteRecord(pathList, pathMap, route, parent) {
     }
   })
   Object.defineProperty(Vue.prototype, '$route', {get() {return this._routerRoot._route;}})
-  ````
+  ```
 :::
-<highlight>
-
+</highlight>
 
   这两步就能在组件中拿到 `parent.$route`，由于已被定义为响应式数据，当路径改变时，会自动触发当前 `ViewRouter` 占位符更新渲染对应的组件
 - 由于会存在嵌套的 ViewRouter, 就会产生一个路径匹配了多个 route，如： { path: '/user/email', matched: [ { path: '/user', component: User }, { path: '/user/email', component: UserEmail } ] }, 需要对上层已匹配渲染的 ViewRouter 进行标记，便于正确渲染。
@@ -622,9 +612,9 @@ export default {
     return h(record.component, data);
   }
 }
-````
+```
 :::
-<highlight>
+</highlight>
 
 
 
@@ -640,12 +630,9 @@ export default {
 ::: slot dedault
 ```js
 <view-link to='/user'>go to user</view-link>
-````
+```
 :::
-<highlight>
-
-
-
+</highlight>
 
 <highlight>
 
@@ -672,11 +659,9 @@ export default {
     return <tag onClick={this.handler}>{this.$slots.default}</tag>;
   },
 };
-````
+```
 :::
-<highlight>
-
-
+</highlight>
 
 ### history
 由于存在两种形式的路由，引入基类 `History`，实现通用方法和属性。
@@ -722,11 +707,9 @@ export class History {
   }
 
 }
-````
+```
 :::
-<highlight>
-
-
+</highlight>
 
 ##### createRoute 辅助函数
 - 生成当前路径对应的匹配数组
@@ -751,11 +734,9 @@ export function createRoute(record, pathOption) {
     matched,
   };
 }
-````
+```
 :::
-<highlight>
-
-
+</highlight>
 
 ##### runQueue 迭代生成器
 这是经典的函数思想（中间件概念？），按顺序迭代用户定义的 hook 函数，并将向下执行的决定权交给用户，即：调用 next() 执行
@@ -775,10 +756,9 @@ export function createRoute(record, pathOption) {
     // 只有调用 next 才会向后执行下一个 hook， 或者是最终的 出口函数callback
     next();
   }
-  ````
+  ```
 :::
 </highlight>
-
 
 <highlight>
 
@@ -792,7 +772,7 @@ function runQueue(queue, iterator, callback) {
   }
   step(0)
 }
-````
+```
 :::
 </highlight>
 
@@ -821,11 +801,9 @@ export class HashHistory extends History{
     return window.location.hash.slice(1);
   }
 }
-````
+```
 :::
-<highlight>
-
-
+</highlight>
 
 ### html5
 
@@ -834,7 +812,7 @@ export class HashHistory extends History{
 ::: slot dedault
 ```js
 // todos
-````
+```
 :::
-<highlight>
+</highlight>
 
