@@ -323,9 +323,10 @@ npm install husky --save-dev
 
 ### commitlint-config-cz
 
-如果是使用cz-customizable适配器做了破坏Angular风格的提交说明配置，那么不能使用**@commitlint/config-conventional**规则进行提交说明校验，可以使用commitlint-config-cz对定制化提交说明进行校验。
+如果是使用cz-customizable适配器做了破坏Angular风格的提交说明配置，那么不能使用 **@commitlint/config-conventional** 规则进行提交说明校验，可以使用commitlint-config-cz对定制化提交说明进行校验。
 
 安装校验规则：
+
 <highlight>
 
 ::: slot default
