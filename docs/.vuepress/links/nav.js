@@ -29,6 +29,10 @@ module.exports = [
         text:'Vue-MVVM',
         link: '/study/mvvm'
       },
+      { 
+        text:'Cz',
+        link: '/study/cz'
+      },
     ],
   },
   {
