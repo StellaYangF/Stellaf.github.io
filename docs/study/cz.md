@@ -248,7 +248,7 @@ module.exports = {
 
 </highlight>
 
-## Commitizen校验
+## Commitizen 校验
 
 ### commitlint
 校验提交说明是否符合规范，安装校验工具 [commitlint](https://github.com/marionebl/commitlint)：
@@ -321,12 +321,11 @@ npm install husky --save-dev
 
 需要注意，使用该校验规则不能对.cz-config.js进行不符合Angular规范的定制处理，例如之前的汉化，此时需要将.cz-config.js的文件按照官方示例文件cz-config-EXAMPLE.js进行符合Angular风格的改动。
 
-## commitlint-config-cz
+### commitlint-config-cz
 
 如果是使用cz-customizable适配器做了破坏Angular风格的提交说明配置，那么不能使用**@commitlint/config-conventional**规则进行提交说明校验，可以使用commitlint-config-cz对定制化提交说明进行校验。
 
 安装校验规则：
-
 <highlight>
 
 ::: slot default
@@ -354,10 +353,10 @@ module.exports = {
 </highlight>
 
 
-## validate-commit-msg
+### validate-commit-msg
 除了使用commitlint校验工具，也可以使用 [validate-commit-msg](https://github.com/Frikki/validate-commit-message) 校验工具对cz提交说明是否符合Angular规范进行校验。
 
-## Commitizen日志
+## Commitizen 日志
 如果使用了cz工具集，配套conventional-changelog可以快速生成开发日志：
 
 <highlight>
@@ -388,3 +387,8 @@ npm install conventional-changelog -D
 
 ## 总结
 后续可实现插件机制，规范代码提交说明。
+
+## 参考
+[Cz 工具集](https://juejin.im/post/5cc4694a6fb9a03238106eb9#heading-4)
+
+[validate-commit-msg](https://github.com/Frikki/validate-commit-message)
