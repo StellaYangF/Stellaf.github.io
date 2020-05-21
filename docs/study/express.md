@@ -21,11 +21,17 @@ sidebar: auto
 
 
 # Init project 初始化项目
+
+<highlight>
+
+::: slot default
 ```bash
 mkdir express_practice
 cd express_practice
 npm init -y
 ```
+:::
+</highlight>
 
 # Installation 安装
 This is a Node.js module available through the npm registry.
@@ -34,6 +40,10 @@ Before installing, download and install Node.js. Node.js 0.10 or higher is requi
 首先，你得下载、安装 node > 0.10 版本
 Installation is done using the npm install command:
 使用 `npm install` 命令行完成下载。 
+
+<highlight>
+
+::: slot default
 ```bash
 npm i express --save
 or
@@ -41,28 +51,47 @@ npm i express
 or
 npm i express -S
 ```
+:::
+</highlight>
+
 
 # Usage 使用
 ## 新建 app.js
 创建 web 应用程序的文件。
+
+<highlight>
+
+::: slot default
 ```bash
 touch app.js
 ```
+:::
+</highlight>
 
 ## 引入依赖模块
 - express 核心模块
 - app.Router 是一个类
 - user 是一个二级路由实例
+
+<highlight>
+
+::: slot default
 ```js
 const express = require('express');
 const app = express();
 const Router = app.Router;
 const user = new Router();
 ```
+:::
+</highlight>
 
 ## user 路由下的请求
 - 三个参数
 - next 调用不传参，就是让路由系统在没有匹配的路径和方法时，往下一个中间件走；传入参数就是抛出错误
+
+<highlight>
+
+::: slot default
 ```js
 user.get('/remove', (req, res, next) => {
     res.send(`/user/remove`)
@@ -73,8 +102,14 @@ user.get("/add", (req, res, next) => {
     next();
 })
 ```
+:::
+</highlight>
 
 ## app 应用的请求
+
+<highlight>
+
+::: slot default
 ```js
 app.get('/', function (req, res) {
   res.send('Hello World')
@@ -84,46 +119,78 @@ app.get('/', function (req, res) {
   res.send('Hello World')
 })
 ```
+:::
+</highlight>
 
 ## 注册 user 二级路由系统
 - 注册中间件
 - 接口一： /user/remove
 - 接口二： /user/add
+
+<highlight>
+
+::: slot default
 ```js
 app.use('/user', user);
 ```
+:::
+</highlight>
 
 ## 错误捕获处理
 - 错误中间件
 - 四个参数，第一个参数就是捕获的错误
 - 该错误是由前面请求中，调用 next 
+
+<highlight>
+
+::: slot default
 ```js
 app.use(function(err, req, res, next) {
     if (err) res.send(err);
 })
 ```
+:::
+</highlight>
+
 
 ## 监听端口
+
+<highlight>
+
+::: slot default
 ```js
 app.listen(3000);
 ```
+:::
+</highlight>
+
 ## express 核心概念
 express 核心用到的就是 commonjs 规范，基本都是基于回调实现的中间件与请求。
 ### outlet structure 目录结构
+
+<highlight>
+
+::: slot default
 ```bash
-- express
-    - index.js
-    - lib
-        - express.js
-        - application.js
-        - router
-            - index.js
-            - layer.js
-            - route.js
+└──express
+   ├──index.js
+   └──lib
+       ├──express.js
+       ├──application.js
+       └──router
+           ├──index.js
+           ├──layer.js
+           └──route.js
 ```
+:::
+</highlight>
 
 # Fulfill 实现
 新建包文件及其子文件
+
+<highlight>
+
+::: slot default
 ```bash
 mkdir express && cd express
 touch index.js
@@ -135,11 +202,21 @@ touch index.js
 touch layer.js
 touch route.js
 ```
+:::
+</highlight>
+
 ## express/index.js
 express 本质就是一个函数，调用后就返回一个 `Application` 运用类实例
+
+<highlight>
+
+::: slot default
 ```js
 module.exports = require("./lib/express");
 ```
+:::
+</highlight>
+
 > express 采用的是 commonjs 规范。文件的导出和引入分别是: `require()`, `module.exports`。
 
 ## express/lib/express.js
@@ -147,59 +224,106 @@ module.exports = require("./lib/express");
 - **应用** 和 **路由** 两大系统各司其职。
 - `createApplication` 为工厂函数，函数体内实例化一个 [`Application`](#application) 实例对象并返回，为每一个引入 `express` 包模块产生一个独立的 应用实例。
 - `createApplication.Router` 挂载的是一个 Router 类，将路由系统独立使用。
+
+<highlight>
+
+::: slot default
 ```js
 const Application = require('./application');
 const Router = require('./router');
 ```
+:::
+</highlight>
 
 ### `createApplication` 实例化应用实例的函数
+
+<highlight>
+
+::: slot default
 ```js
 function createApplication() {
     return new Application();
 }
 ```
+:::
+</highlight>
 
 ### 给函数添加 Router 属性
+
+<highlight>
+
+::: slot default
 ```js
 createApplication.Router = Router;
 ```
+:::
+</highlight>
+
 > 注意：函数也是一个对象，可以添加属性。
 
 ### 导出函数
+
+<highlight>
+
+::: slot default
 ```js
 module.exports = createApplication;
 ```
+:::
+</highlight>
 
 ##  <span id='application'>express/lib/application.js</span>
 
 ### 下载第三方工具库
+
+<highlight>
+
+::: slot default
 ```bash
 npm i methods --save
 ```
+:::
+</highlight>
+
 ### 引入依赖包
 - `http` `node` 核心模块，不需要下载安装，用来调用 `http.createServer()` 创建一个 web 服务。
 - `Router` 路由系统类，详情见 [router.js](#router)
 - `methods` 第三方库 `declare const methods: string[];`
 
+<highlight>
+
+::: slot default
 ```js
 const http = require('http');
 const Router = require('./router');
 const methods = require('methods');
 ```
+:::
+</highlight>
 
 ### 创建 `Application` 类
 - 实例属性 `config`
 - 实例属性 `_router`，后续会记性优化*
+
+<highlight>
+
+::: slot default
 ```js
 function Application(){ 
     this.config = {};
     this._router = new Router;
 }
 ```
+:::
+</highlight>
 
 ### set 实例方法
 - 参数为2个时，设置操作
 - 参数为1个时，取值操作
+
+<highlight>
+
+::: slot default
 ```js
 Application.prototype.set = function (key, value) {
     if (arguments.length === 2) {
@@ -209,6 +333,8 @@ Application.prototype.set = function (key, value) {
     }
 }
 ```
+:::
+</highlight>
 
 ### layze_route 实例方法
 性能优化：
@@ -216,39 +342,66 @@ Application.prototype.set = function (key, value) {
 - 取代 Application 一旦实例化，就初始 _router 属性，客户端如果不调用 (any method)请求 | param 方法，只是调用了 use 方法，就会造成性能浪费。
 - _router 只有一个，也就是只需要实例化一次进行赋值。
 
+<highlight>
+
+::: slot default
 ```js
 function Application(){ 
      this.config = {};
 -    this._router = new Router;
 }
 ```
+:::
+</highlight>
+
+<highlight>
+
+::: slot default
 ```js
 Application.prototype.lazy_route = function() {
     if (!this._router) return this._router = new Router();
 }
 ```
+:::
+</highlight>
 
 ### param 实例方法
 具体实现都交给 _router 路由系统来处理
+
+<highlight>
+
+::: slot default
 ```js
 Application.prototype.param = function (key, handler) {
     this.lazy_route();
     this._router.param(key, handler);
 }
 ```
+:::
+</highlight>
 
 ### use 实例方法
 具体实现都交给 _router 路由系统来处理
+
+<highlight>
+
+::: slot default
 ```js
 Application.prototype.use = function(path, handler) {
     this.lazy_route();
     this._router.use(path, handler);
 }
 ```
+:::
+</highlight>
 
 ### method 实例方法
 具体实现都交给 _router 路由系统来处理
 可传入多个回调函数 `handlers`
+
+<highlight>
+
+::: slot default
 ```js
 methods.forEach(method => {
     Application.prototype[method] = function(path, ...handlers) {
@@ -260,12 +413,18 @@ methods.forEach(method => {
     }
 })
 ```
+:::
+</highlight>
 
 ### <span id='listen'>listen 实例方法</span>
 - 调用`http.createServer(function(req, res))`, 创建一个 server 服务；
 - 准备一个 `done` 方法，供路由系统没有匹配的路由(方法和路径)时使用，调也就是 `next` 方法；
 - 调用 `_router.handle`，传入`req`, `res`, `done`三个参数，让路由系统来处理请求，并作出响应；
 - 指定监听的端口号，选择性传入回调函数。
+
+<highlight>
+
+::: slot default
 ```js
 
 Application.prototype.listen = function() {
@@ -280,30 +439,55 @@ Application.prototype.listen = function() {
     server.listen(...arguments);
 }
 ```
+:::
+</highlight>
+
 ### 导出 `Application` 类
+
+<highlight>
+
+::: slot default
 ```js
 module.exports = Application;
 ``` 
+:::
+</highlight>
 
 ## <span id='router'>express/lib/router/index.js</span>
 ### 引入依赖模块
+
+<highlight>
+
+::: slot default
 ```js
 const url = require('url');
 const methods = require('methods');
 const Route = require('./route');
 const Layer = require('./layer');
 ```
+:::
+</highlight>
 
 ### 声明一个 `proto` 对象
 - 供 `Router` 类的构造函数内部的 `router` 函数继承 
+
+<highlight>
+
+::: slot default
 ```js
 const proto = {};
 ```
+:::
+</highlight>
 
 ### 创建 `Router` 类
 - `constructor` 函数内部返回一个 `router` 函数，且该函数包含多个属性/方法
 - 为什么要重写构造函数？
     - 供二级路由使用
+
+    <highlight>
+
+    ::: slot default
     ```js
     // user 就是一个中间件，
     const user = new app.Router();
@@ -311,6 +495,12 @@ const proto = {};
     app.use('user', user);
     // user 函数调用就是 router 调用，进而调用 router.handle 函数
     ```
+    :::
+    </highlight>
+
+<highlight>
+
+::: slot default
 ```js
 function Router() {
     const router = function (req, res, next) {
@@ -322,6 +512,9 @@ function Router() {
     return router;
 }
 ```
+:::
+</highlight>
+
 > 注意：
 - 可以简单粗暴的理解 `router` 的**机制**，就是经典的 `发布订阅` 模式；
 - 订阅阶段：
@@ -336,6 +529,10 @@ function Router() {
     - 调用 `app.Router` 进行二级路由的实例 
 
 ### param 方法
+
+<highlight>
+
+::: slot default
 ```js
 proto.param = function (key, handler) {
     if (this.paramsCallback[key]) {
@@ -345,11 +542,18 @@ proto.param = function (key, handler) {
     }
 }
 ```
+:::
+</highlight>
+
 ### route 方法
 - 实例化一条 `route` 路由 
 - 实例化一个 `layer` 层
 - 完成一条订阅
 - 返回这个 `route` 
+
+<highlight>
+
+::: slot default
 ```js
 proto.route = function (path) {
     const route = new Route();
@@ -359,12 +563,17 @@ proto.route = function (path) {
     return route;
 }
 ```
+:::
+</highlight>
 
 ### use 方法
 - 调用 route 方法
 - 实例化一个 `layer` 层
 - `layer.route` 设置为 `undefined` 值，方便在发布的时候判断为普通中间件，内部没有 `route` 路由
 
+<highlight>
+
+::: slot default
 ```js
 proto.use = function (path, handler) {
     if (typeof path === 'function') {
@@ -376,10 +585,16 @@ proto.use = function (path, handler) {
     this.stack.push(layer);
 }
 ```
+:::
+</highlight>
 
-### [method] 方法
+### get/ post/ delete/ update ... 方法
 - 每调用一次，就新加一层 `layer`
 - 触发 `route[method]`
+
+<highlight>
+
+::: slot default
 ```js
 methods.forEach(method => {
     proto[method] = function (path, ...handlers) {
@@ -388,8 +603,14 @@ methods.forEach(method => {
     }
 })
 ```
+:::
+</highlight>
 
 ### process_params 参数方法
+
+<highlight>
+
+::: slot default
 ```js
 proto.process_params = function (layer, req, res, done) {
     if (!layer.keys || layer.keys.length === 0) {
@@ -421,6 +642,8 @@ proto.process_params = function (layer, req, res, done) {
     }
 }
 ```
+:::
+</highlight>
 
 ### handle 方法
 - 发布之前订阅的方法 | 中间件；
@@ -428,6 +651,9 @@ proto.process_params = function (layer, req, res, done) {
 - `dispatch` 为核心方法，采用递归方式；
 - `removed` 为二级路由的子路径，当请求路径为/user/add， 第一轮匹配 `/user` 时，会先删除，再进一步往 route 层 处理，此时路径为 /add，当 /add 无法匹配，则递归调用 `dispatch` 调用下一个 layer，再把 /user 追加回来。
 
+<highlight>
+
+::: slot default
 ```js
 proto.handle = function (req, res, out) {
     let { pathname } = url.parse(req.url);
@@ -496,28 +722,52 @@ proto.handle = function (req, res, out) {
     dispatch();
 }
 ```
+:::
+</highlight>
 
 ### 导出 `Router` 类 
+
+<highlight>
+
+::: slot default
 ```js
 module.exports = Router;
 ```
+:::
+</highlight>
 
 ## <span id='layer'>express/lib/router/layer.js</span>
 ### 下载依赖包
+
+<highlight>
+
+::: slot default
 ```js
 npm i path-to-regexp --save
 ```
+:::
+</highlight>
 
 ### 引入依赖包
 - [path-to-regexp](https://www.npmjs.com/package/path-to-regexp)
+
+<highlight>
+
+::: slot default
 ```js
 const { pathToRegexp } = require('path-to-regexp');
 ```
+:::
+</highlight>
 
 ### 创建 Layer 类
 层的运用在两个场景
 - 在 `Router.stack` 中，每一个数组元素都是 `layer`；
 - 在 `Route.stack` 中，同上。
+
+<highlight>
+
+::: slot default
 ```js
 function Layer(path, handler) {
     this.path = path;
@@ -525,8 +775,14 @@ function Layer(path, handler) {
     this.reg = pathToRegexp(this.path, this.keys=[]);
 }
 ```
+:::
+</highlight>
 
 ### match 方法
+
+<highlight>
+
+::: slot default
 ```js
 Layer.prototype.match = function(pathname) {
     let match = pathname.match(this.reg);
@@ -543,16 +799,28 @@ Layer.prototype.match = function(pathname) {
     }
 }
 ```
+:::
+</highlight>
 
 ### handle_request 方法
 核心
+
+<highlight>
+
+::: slot default
 ```js
 Layer.prototype.handle_request = function(req, res, next) {
     this.handler(req, res, next);
 }
 ```
+:::
+</highlight>
 
 ### <span id='handle_err'>handle_err 方法</span>
+
+<highlight>
+
+::: slot default
 ```js
 Layer.prototype.handle_err = function(err, req, res, next) {
     // 可能是错误中间件
@@ -562,29 +830,55 @@ Layer.prototype.handle_err = function(err, req, res, next) {
     next(err);
 }
 ```
+:::
+</highlight>
+
 ### 导出 Layer 类
+
+<highlight>
+
+::: slot default
 ```js
 module.exports = Layer;
 ```
+:::
+</highlight>
 
 ## <span id='route'>express/lib/router/route.js</span>
 ### 引入依赖包
+
+<highlight>
+
+::: slot default
 ```js
 const methods = require('methods');
 const Layer = require('./layer');
 ```
+:::
+</highlight>
 
 ### 创建 `Route` 类
+
+<highlight>
+
+::: slot default
 ```js
 function Route() {
     this.stack = [];
     this.methods = {};
 }
 ```
+:::
+</highlight>
+
 > methods 实例方法用来快速定位当前的 匹配方法是否正确，节约性能
 
 ### dispatch 实例方法
 核心
+
+<highlight>
+
+::: slot default
 ```js
 Route.prototype.dispatch = function (req, res, out) {
     let index = 0;
@@ -600,8 +894,14 @@ Route.prototype.dispatch = function (req, res, out) {
     dispatch();
 }
 ```
+:::
+</highlight>
 
 ### [method] 实例方法
+
+<highlight>
+
+::: slot default
 ```js
 methods.forEach(method => {
     Route.prototype[method] = function (handlers) {
@@ -614,11 +914,19 @@ methods.forEach(method => {
     }
 });
 ```
+:::
+</highlight>
 
 ### 导出 Route 类
+
+<highlight>
+
+::: slot default
 ```js
 module.exports = Route;
 ```
+:::
+</highlight>
 
 # DONE
 写了好久，告一段落 - 后续补上一个简单的图以便更好理解学习。

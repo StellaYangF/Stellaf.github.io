@@ -20,13 +20,23 @@ sidebar: auto
 
 ## 运用
 ### 准备工作
+
+<highlight>
+
+::: slot default
 ```bash
-- npm init 初始化 `package.json` 文件
-- npm install koa -S 下载生产环境依赖的 `koa` 包
+npm init 初始化 `package.json` 文件
+npm install koa -S 下载生产环境依赖的 `koa` 包
 ```
+:::
+</highlight>
 
 ### 初始化文件
 - 新建 app.js 运用文件
+
+<highlight>
+
+::: slot default
 ```js
 const Koa  = require('koa');
 
@@ -65,8 +75,11 @@ app.on('err', console.log);
 
 app.listen(3000);
 ```
+:::
+</highlight>
 
 打印结果：
+
 ```js
 1
 2
@@ -93,26 +106,42 @@ app.listen(3000);
 <img src='https://user-gold-cdn.xitu.io/2020/2/26/1708116ae88aead5?w=1354&h=576&f=png&s=40117'/>
 
 ### 目录结构
+
+<highlight>
+
+::: slot default
 ```js
-koa
-        | application.js
-    | lib
-        | context.js
-        | request.js
-        | response.js
-    | package.json
+└──koa
+    ├──application.js
+    ├──lib
+    │   ├──context.js
+    │   ├──request.js
+    │   └──response.js
+    └──package.json
 ```
+:::
+</highlight>
 
 ### coding
 #### `package.json`
+
+<highlight>
+
+::: slot default
 ```js
 {
     "main": "lib/application.js",
 }
 为 `koa` 包确定入口文件。
 ```
+:::
+</highlight>
 
 #### `application.js`
+
+<highlight>
+
+::: slot default
 ```js
 const Emitter = require('events');
 const http = require('http');
@@ -184,6 +213,9 @@ module.exports = class Koa extends Emitter{
     }
 }
 ```
+:::
+</highlight>
+
 解析：
 - `Object.create(targetObject);` 这里的 `targetObject` 是 `context`, `response`, `request`，该步是将准备好的三个对象进行原型链继承
 - `context`：内部运用了 `Object.prototype.__defineGetter__` 和 `Object.prototype.__defineSetter` ，该步就是改写 `context` 属性为访问属性，取值和赋值的时候通过函数形式，多一些逻辑操作。如：`context.method` 当前的 `context` 上并没有 `method` 属性，通过 `Object.prototype.__defineGetter__` 调用时，内部返回 `response.method`则可以完成取值。
@@ -193,6 +225,10 @@ module.exports = class Koa extends Emitter{
 <img src="https://user-gold-cdn.xitu.io/2020/2/27/1708564e5ac06cb9?w=1354&h=576&f=png&s=21191"/>
 
 #### `context.js`
+
+<highlight>
+
+::: slot default
 ```js
 const proto = {};
 
@@ -221,8 +257,14 @@ defineSetter('response', 'body');
 
 module.exports = proto;
 ```
+:::
+</highlight>
 
 #### `request.js`
+
+<highlight>
+
+::: slot default
 ```js
 const url = require('url');
 const querystring = require('querystring');
@@ -266,8 +308,14 @@ module.exports = {
 
 }
 ```
+:::
+</highlight>
 
 #### `response.js`
+
+<highlight>
+
+::: slot default
 ```js
 module.exports = {
     _body: undefined,
@@ -304,3 +352,5 @@ module.exports = {
     }
 }
 ```
+:::
+</highlight>

@@ -37,11 +37,18 @@ multiple components that share a common state:
 
 ## 新建 store 仓库文件
 在初始化 store.js 文件时，需要手动注册 **Vuex**，这一步是为了将 **store** 属性注入到每个组件的实例上，可通过 **this.$store.state** 获取共享状态。
+
+<highlight>
+
+::: slot default
 ```js
 import Vue from 'vue'
 import Vuex from 'vuex'
 Vue.use(Vuex)
 ```
+:::
+</highlight>
+
 > Tip: 这里 Vue 是在进行订阅，Vuex.install 函数，根组件在实例化时，会自动派发执行 install 方法，并将 Vue 作为参数传入。
 
 导出 Store 实例，传入属性对象，可包含以下属性：
@@ -54,6 +61,10 @@ Vue.use(Vuex)
  - **modules**: 子模块状态
  - **namespaced**: 字模块设置命名空间
  - **strict**: 严格模式
+
+<highlight>
+
+::: slot default
 ```js
 export default new Vuex.Store({
   state: {
@@ -94,15 +105,28 @@ export default new Vuex.Store({
 })
 store.state.a.age // -> "18"
 ```
+:::
+</highlight>
 
 ## 组件中使用
 引入相关映射函数
+
+<highlight>
+
+::: slot default
 ```js
 import { mapState, mapGetters, mapActions, mapMutations } from 'vuex';
 ```
+:::
+</highlight>
+
 组件中使用时，这四种映射函数用法差不多，都是返回一个对象。
 
 方式一：
+
+<highlight>
+
+::: slot default
 ```js
 {
   computed: {
@@ -116,9 +140,16 @@ import { mapState, mapGetters, mapActions, mapMutations } from 'vuex';
   }
 }
 ```
+:::
+</highlight>
+
 > Tip: 上述方式在获取多个状态时，代码重复过多且麻烦，**this.$store.state**，可进一步优化为第二种方式
 
 方式二：
+
+<highlight>
+
+::: slot default
 ```js
 {
   computed: mapState({
@@ -134,6 +165,9 @@ import { mapState, mapGetters, mapActions, mapMutations } from 'vuex';
   })
 }
 ```
+:::
+</highlight>
+
 可以看到上述的状态映射，调用时可传入 options  对象，属性值有三种形式：
 - 箭头函数（简洁）
 - 字符串（别名）
@@ -142,6 +176,11 @@ import { mapState, mapGetters, mapActions, mapMutations } from 'vuex';
 > Tip: 如果当前实例组件，有自己的私有的计算属性时，可使用 **es6** 语法的 **Object Spread Operator** 对象展开运算符
 
 方式三：
+
+
+<highlight>
+
+::: slot default
 ```js
 {
   computed: {
@@ -152,9 +191,16 @@ import { mapState, mapGetters, mapActions, mapMutations } from 'vuex';
   }
 }
 ```
+:::
+</highlight>
 
 在子模块状态属性中添加 **namespaced: true**  字段时，**mapMutations**, **mapActions** 需要添加对应的命名空间
 方式一：
+
+
+<highlight>
+
+::: slot default
 ```js
 {
   methods: {
@@ -167,8 +213,14 @@ import { mapState, mapGetters, mapActions, mapMutations } from 'vuex';
   }
 }
 ```
+:::
+</highlight>
 
 方式二：
+
+<highlight>
+
+::: slot default
 ```js
 {
   methods: {
@@ -181,9 +233,15 @@ import { mapState, mapGetters, mapActions, mapMutations } from 'vuex';
   }
 }
 ```
+:::
+</highlight>
 
 方式三：
 借助 **vuex** 内部帮助函数进行包装
+
+<highlight>
+
+::: slot default
 ```js
 import { createNamespacedHelpers } from 'vuex'
 
@@ -195,6 +253,8 @@ const { mapMutations } = createNamespacedHelpers('a')
   ])
 }
 ```
+:::
+</highlight>
 
 除了以上基础用法之外，还有 **plugins**, **registerModule** 属性与 api， 后续的源码分析上会尝试实现。
 
@@ -203,6 +263,9 @@ const { mapMutations } = createNamespacedHelpers('a')
 
 ## Application Structure 目录结构
 
+<highlight>
+
+::: slot default
 ```sh
 └── vuex
     └── src
@@ -216,9 +279,15 @@ const { mapMutations } = createNamespacedHelpers('a')
             ├── module-collection.js
             └── module.js
 ```
+:::
+</highlight>
 
 ## 核心入口文件
 导出包含核心代码的对象
+
+<highlight>
+
+::: slot default
 ```js
 // index.js
 import { Store, install } from './store';
@@ -244,9 +313,15 @@ export {
   createNamespacedHelpers
 }
 ```
+:::
+</highlight>
 
 ## store.js
 ### 实现 install 方法
+
+<highlight>
+
+::: slot default
 ```js
 function install(_Vue) {
   Vue = _Vue;
@@ -261,10 +336,17 @@ function install(_Vue) {
   })
 }
 ```
+:::
+</highlight>
+
 > Tip: 内部通过调用 **Vue.mixin()**，为所有组件注入 $store 属性
 
 ### 实现 Store 类
 ### Store 数据结构
+
+<highlight>
+
+::: slot default
 ```ts
 interface StoreOptions<S> {
     state?: S | (() => S);
@@ -294,10 +376,17 @@ export declare class Store<S> {
   
 }
 ```
+:::
+</highlight>
+
 > Tip: 以上对源码上有一定出入，简化之后有些属性和方法有所删减和改动
 
 依次执行步骤:
 - 脚本引入时，确保 install 方法被调用，先判断是否挂载了全局属性 Vue
+  
+<highlight>
+
+::: slot default
   ```js
   constructor(options = {}) {
       if (!Vue && typeof Window !== undefined && Window.Vue) {
@@ -305,8 +394,14 @@ export declare class Store<S> {
       }
   }
   ```
+:::
+</highlight>
 
 #### 构造函数内部先初始化实例属性和方法
+
+<highlight>
+
+::: slot default
   ```js
     this.strict = options.strict || false;
     this._committing = false;
@@ -320,10 +415,17 @@ export declare class Store<S> {
     this.actions = Object.create(null);
     this.subs = [];
   ```
-  > Tip: **this.vm** 是核心，实现状态响应式，一旦发生改变，依赖的组件视图就会立即更新。
+:::
+</highlight>
+
+> Tip: **this.vm** 是核心，实现状态响应式，一旦发生改变，依赖的组件视图就会立即更新。
 
 #### getters 
 类型为 GetterTree 调用 **Object.create(null)** 创建一个干净的对象，即原型链指向 null，没有原型对象的方法和属性，提高性能
+
+<highlight>
+
+::: slot default
   ```ts
   export interface GetterTree<S, R> {
     [key: string]: Getter<S, R>;
@@ -336,17 +438,29 @@ export declare class Store<S> {
     [key: string]: Mutation<S>;
   }
   ```
+  :::
+  </highlight>
 
 ##### actions
 类型为 ActionTree
+
+<highlight>
+
+::: slot default
   ```ts
   export interface ActionTree<S, R> {
     [key: string]: Action<S, R>;
   }
   ```
+:::
+</highlight>
 
 ##### modules
 考虑到 state 对象下可能会有多个 modules，创建 **ModuleCollection** 格式化成想要的数据结构
+
+<highlight>
+
+::: slot default
   ```ts
   export interface Module<S, R> {
     namespaced?: boolean;
@@ -361,24 +475,42 @@ export declare class Store<S> {
     [key: string]: Module<any, R>;
   }
   ```
+  :::
+  </highlight>
 
 ##### get state
 **core** 这里进行了依赖收集，将用户传入的 state 变为响应式数据，数据变化触发依赖的页面更新
+
+<highlight>
+
+::: slot default
   ```js
   get state() {
     return this.vm.state;
   }
   ```
+  :::
+  </highlight>
 
 ##### subscribe
 订阅的事件在每一次 mutation 时发布
+
+<highlight>
+
+::: slot default
   ```js
     subscribe(fn) {
       this.subs.push(fn);
     }
   ```
+  :::
+  </highlight>
 
   - **replaceState**
+  
+<highlight>
+
+::: slot default
   ```js
     replaceState(newState) {
       this._withCommit(() => {
@@ -386,19 +518,32 @@ export declare class Store<S> {
       })
     }
   ```
+  :::
+  </highlight>
 
 ##### subs
  订阅事件的存储队列
 
 ##### plugins
+
+<highlight>
+
+::: slot default
   ```js
   const plugins= options.plugins;
     plugins.forEach(plugin => plugin(this));
   ```
+  :::
+  </highlight>
+
 结构为数组，暴露每一次 mutation 的钩子函数。每一个 Vuex 插件仅仅是一个函数，接收 唯一的参数 store，插件功能就是在mutation 调用时增加逻辑，如：
     - **createLogger**  vuex/dist/logger 修改日志（内置）
     - **stateSnapShot** 生成状态快照
     - **persists** 数据持久化
+    
+<highlight>
+
+::: slot default
   ```js
   const persists = store => {
     // mock data from server db
@@ -410,12 +555,18 @@ export declare class Store<S> {
     store.subscribe((mutation, state) =>  localStorage.setItem('Vuex:state', JSON.stringify(state)))
   }
   ```
+  :::
+  </highlight>
 
 ##### _committing
 boolean 监听异步逻辑是否在 dispatch 调用
 
 ##### _withCommit
 函数接片，劫持mutation（commit） 触发函数。
+
+<highlight>
+
+::: slot default
   ```js
   _withCommit(fn) {
     const committing = this._committing;
@@ -424,9 +575,15 @@ boolean 监听异步逻辑是否在 dispatch 调用
     this._committing = committing;
   }
   ```
+  :::
+  </highlight>
 
 ##### strict
 源码中，在严格模式下，会深度监听状态异步逻辑的调用机制是否符合规范
+
+<highlight>
+
+::: slot default
 ```js
 if (this.strict) {
       this.vm.$watch(
@@ -441,9 +598,16 @@ if (this.strict) {
       );
     }
 ```
+:::
+</highlight>
+
 > Tip: 生产环境下需要禁用 strict 模式，深度监听会消耗性能，核心是调用 Vue 的监听函数
 
 ##### commit
+
+<highlight>
+
+::: slot default
   ```js
   commit = (type, payload) => {
     this._withCommit(() => {
@@ -451,15 +615,27 @@ if (this.strict) {
     })
   }
   ```
+  :::
+  </highlight>
 
 ##### dispatch
+
+<highlight>
+
+::: slot default
   ```js
   dispatch = (type, payload) => {
     this.actions[type].forEach(fn => fn(payload));
   }
   ```
+  :::
+  </highlight>
 
 ##### registerModule 动态注册状态模块
+
+<highlight>
+
+::: slot default
   ```js
   registerModule(moduleName, module) {
     this._committing = true;
@@ -471,9 +647,15 @@ if (this.strict) {
     installModule(this, this.state, moduleName, module.rawModule)
   }
   ```
+  :::
+  </highlight>
 
 ##### installModule
 工具方法，注册格式化后的数据，具体表现为: （注册）
+
+<highlight>
+
+::: slot default
   ```js
   /**
    * 
@@ -487,7 +669,14 @@ if (this.strict) {
     let { getters, mutations, actions } = rawModule._raw;
     let root = store.modules.root;
   ```
+  :::
+  </highlight>
+
   - **子模块命名空间处理**
+  
+  <highlight>
+
+  ::: slot default
   ```js
     const namespace = path.reduce((str, currentModuleName) => {
       // root._raw 对应的就是 当前模块的 option， 根模块没有 namespaced 属性跳过
@@ -495,7 +684,14 @@ if (this.strict) {
       return str + (root._raw.namespaced ? currentModuleName + '/' : '')
     }, '');
   ```
+  :::
+  </highlight>
+
   - **注册 state**
+  
+  <highlight>
+
+  ::: slot default
   ```js
       if (path.length > 0) {
         let parentState = path.slice(0, -1).reduce((root, current) => root[current], rootState);
@@ -503,8 +699,14 @@ if (this.strict) {
         Vue.set(parentState, path[path.length - 1], rawModule.state);
       }
   ```
+  :::
+  </highlight>
 
  - **注册 getters**
+ 
+  <highlight>
+
+  ::: slot default
   ```js
     if (getters) {
       foreach(getters, (type, fn) => Object.defineProperty(store.getters, namespace + type, {
@@ -512,7 +714,14 @@ if (this.strict) {
       }))
     }
   ```
+  :::
+  </highlight>
+
   - **注册 mutations**
+  
+  <highlight>
+
+  ::: slot default
   ```js
     if (mutations) {
       foreach(mutations, (type, fn) => {
@@ -528,7 +737,14 @@ if (this.strict) {
       })
     }
   ```
+  :::
+  </highlight>
+
   - **注册 actions**
+  
+  <highlight>
+
+  ::: slot default
   ```js
     if (actions) {
       foreach(actions, (type, fn) => {
@@ -537,21 +753,41 @@ if (this.strict) {
       })
     }
   ```
+  :::
+  </highlight>
+
   - **递归处理子模块**
+  
+  <highlight>
+
+  ::: slot default
   ```js
     foreach(rawModule._children, (moduleName, rawModule) => installModule(store, rootState, path.concat(moduleName), rawModule))
   }
   ```
+  :::
+  </highlight>
 
 ### ModuleCollection 类结构
 #### constructor 构造函数
+
+<highlight>
+
+::: slot default
   ```js
   class ModuleCollection{
     constructor(options) {
       this.register([], options);
     }
   ```
+  :::
+  </highlight>
+
 #### register 实例方法
+
+<highlight>
+
+::: slot default
 ```js
 // rootModule: 为当前模块下的 StoreOption
     register(path, rootModuleOption) {
@@ -576,10 +812,16 @@ if (this.strict) {
     }
   }
   ```
+  :::
+  </highlight>
 
 ### helpers.js
 帮助文件中的四个函数都是通过接受对应要映射为对象的参数名，直接供组件内部使用。
 #### mapState 
+
+<highlight>
+
+::: slot default
   ```js
   export const mapState = (options) => {
     let obj = Object.create(null);
@@ -602,12 +844,18 @@ if (this.strict) {
     return obj;
   };
   ```
+  :::
+  </highlight>
 
 > 参数 **options** 类型可以是: 
       - **Array[string]**, 如：[ 'count', 'list' ] 
       - **Object**, key 值为状态名，value 可以是 **string**, **arrow function**, **normal function**，其中常规函数，可以在内部访问到当前组件实例
 
 #### mapGetters
+
+<highlight>
+
+::: slot default
 ```js
   export function mapGetters(namespace, options) {
     let obj = Object.create(null);
@@ -626,8 +874,14 @@ if (this.strict) {
     return obj;
   }
   ```
+  :::
+  </highlight>
 
 #### mapMutations
+
+<highlight>
+
+::: slot default
   ```js
   export function mapMutations(namespace, options) {
     let obj = Object.create(null);
@@ -645,8 +899,14 @@ if (this.strict) {
     return obj;
   }
   ```
-  
+  :::
+  </highlight>
+
 #### mapActions
+
+<highlight>
+
+::: slot default
   ```js
   export function mapActions(namespace, options) {
     let obj = Object.create(null);
@@ -664,6 +924,8 @@ if (this.strict) {
     return obj;
   }
   ```
+  :::
+  </highlight>
   
   以上后三个方法包含了子模块命名空间，参数解析如下：
 > 参数1可选值，为子状态模块的命名空间
@@ -674,10 +936,16 @@ if (this.strict) {
 处理对象键值对迭代函数处理
 #### getState
 同步用户调用 replaceState 后，状态内部的新状态
+
+  <highlight>
+
+  ::: slot default
   ```js
   const foreach = (obj, callback) => Object.entries(obj).forEach(([key, value]) => callback(key, value));
   const getState = (store, path) => path.reduce((newState, current) => newState[current], store.state);
   ```
+  :::
+  </highlight>
 
 至此， vuex 源码的个人分析基本完结，因为是**简版**与源码会有一定的出入。
 Feel free to tell me if there is any problem.

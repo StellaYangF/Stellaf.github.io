@@ -4,29 +4,29 @@ module.exports = [
     link: "/",
   },
   {
-    text: "Study",
+    text: "Study Analysis",
     link: "/study",
     items: [
       { 
-        text:'Express Analysis',
+        text:'Express',
         link: '/study/express'
       }, { 
-        text:'Koa Analysis',
+        text:'Koa',
         link: '/study/koa'
       }, { 
-        text:'Axios Analysis',
+        text:'Axios',
         link: '/study/axios'
       }, { 
-        text:'Vuex Analysis',
+        text:'Vuex',
         link: '/study/vuex'
       }, { 
-        text:'Router Analysis',
+        text:'Vue-Router',
         link: '/study/router'
       },{ 
-        text:'Vue DOM-Diff Analysis',
+        text:'Vue DOM-Diff',
         link: '/study/domdiff'
       },{ 
-        text:'Vue-MVVM Analysis',
+        text:'Vue-MVVM',
         link: '/study/mvvm'
       },
     ],
