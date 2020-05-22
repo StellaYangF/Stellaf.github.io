@@ -386,6 +386,13 @@ npm install conventional-changelog -D
 
 执行 `npm run changelog` 后可查看生产的日志 CHANGELOG.md。
 
+问题
+执行 `npm run changelog` 运营脚本，提示错误：
+'conventional-changelog' 不是内部或外部命令，也不是可运行的程序
+
+解决
+`npm install -g conventional-changelog-cli` 全局安装即可 
+
 ## 总结
 后续可实现插件机制，规范代码提交说明。
 
