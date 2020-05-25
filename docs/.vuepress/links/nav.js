@@ -28,8 +28,10 @@ module.exports = [
       },{ 
         text:'Vue-MVVM',
         link: '/study/mvvm'
-      },
-      { 
+      },{
+        text: 'Vue-SSR',
+        link: '/study/ssr',
+      },{ 
         text:'Cz',
         link: '/study/cz'
       },
