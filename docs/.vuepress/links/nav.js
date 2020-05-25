@@ -34,7 +34,10 @@ module.exports = [
       },{ 
         text:'Cz',
         link: '/study/cz'
-      },
+      },{
+        text: 'ws',
+        link: '/study/ws',
+      }
     ],
   },
   {

@@ -1,4 +1,9 @@
-# 1.0.0 (2020-05-22)
+# 1.0.0 (2020-05-25)
+
+
+### Bug Fixes
+
+* fix changelog generation bug ([f1e8d97](https://github.com/StellaYangF/StellaYangF.github.io/commit/f1e8d977fc412f32c6e44ac4fb574cb800f00bb9))
 
 
 ### Features
