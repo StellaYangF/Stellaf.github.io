@@ -8,7 +8,7 @@
     <meta name="generator" content="VuePress 1.4.0">
     <link rel="shortcut icon" type="image/x-icon" href="/stella/cute.gif">
     
-    <link rel="preload" href="/stella/assets/css/0.styles.d179d36e.css" as="style"><link rel="preload" href="/stella/assets/js/app.abcd69d5.js" as="script"><link rel="preload" href="/stella/assets/js/2.15e74eba.js" as="script"><link rel="preload" href="/stella/assets/js/14.ccbd8300.js" as="script"><link rel="preload" href="/stella/assets/js/3.9e759294.js" as="script"><link rel="prefetch" href="/stella/assets/js/10.53a0f72b.js"><link rel="prefetch" href="/stella/assets/js/11.895c44d9.js"><link rel="prefetch" href="/stella/assets/js/12.002ced92.js"><link rel="prefetch" href="/stella/assets/js/13.bdc55e8d.js"><link rel="prefetch" href="/stella/assets/js/15.e3c2e829.js"><link rel="prefetch" href="/stella/assets/js/16.a31959c8.js"><link rel="prefetch" href="/stella/assets/js/17.dd8a79e5.js"><link rel="prefetch" href="/stella/assets/js/18.3423d47c.js"><link rel="prefetch" href="/stella/assets/js/4.667ce23e.js"><link rel="prefetch" href="/stella/assets/js/5.a25713e0.js"><link rel="prefetch" href="/stella/assets/js/6.1cc38246.js"><link rel="prefetch" href="/stella/assets/js/7.0a0d8346.js"><link rel="prefetch" href="/stella/assets/js/8.ec0a47fb.js"><link rel="prefetch" href="/stella/assets/js/9.1c6eca10.js">
+    <link rel="preload" href="/stella/assets/css/0.styles.d179d36e.css" as="style"><link rel="preload" href="/stella/assets/js/app.98f33409.js" as="script"><link rel="preload" href="/stella/assets/js/2.15e74eba.js" as="script"><link rel="preload" href="/stella/assets/js/14.ccbd8300.js" as="script"><link rel="preload" href="/stella/assets/js/3.cfe91906.js" as="script"><link rel="prefetch" href="/stella/assets/js/10.0baa017f.js"><link rel="prefetch" href="/stella/assets/js/11.bd566c7e.js"><link rel="prefetch" href="/stella/assets/js/12.7cc9a7db.js"><link rel="prefetch" href="/stella/assets/js/13.fd53832f.js"><link rel="prefetch" href="/stella/assets/js/15.e3c2e829.js"><link rel="prefetch" href="/stella/assets/js/16.a31959c8.js"><link rel="prefetch" href="/stella/assets/js/17.dd8a79e5.js"><link rel="prefetch" href="/stella/assets/js/18.f65d4d18.js"><link rel="prefetch" href="/stella/assets/js/19.5da99f08.js"><link rel="prefetch" href="/stella/assets/js/4.89e5165d.js"><link rel="prefetch" href="/stella/assets/js/5.a25713e0.js"><link rel="prefetch" href="/stella/assets/js/6.1cc38246.js"><link rel="prefetch" href="/stella/assets/js/7.0a0d8346.js"><link rel="prefetch" href="/stella/assets/js/8.ec0a47fb.js"><link rel="prefetch" href="/stella/assets/js/9.af94bb80.js">
     <link rel="stylesheet" href="/stella/assets/css/0.styles.d179d36e.css">
   </head>
   <body>
@@ -32,6 +32,8 @@
   Vue-SSR
 </a></li><li class="dropdown-item"><!----> <a href="/stella/study/cz.html" class="nav-link">
   Cz
+</a></li><li class="dropdown-item"><!----> <a href="/stella/study/ws.html" class="nav-link">
+  ws
 </a></li></ul></div></div><div class="nav-item"><a href="/stella/resume.html" class="nav-link">
   Resume
 </a></div><div class="nav-item"><a href="https://github.com/StellaYangF/StellaYangF.github.io" target="_blank" rel="noopener noreferrer" class="nav-link external">
@@ -56,6 +58,8 @@
   Vue-SSR
 </a></li><li class="dropdown-item"><!----> <a href="/stella/study/cz.html" class="nav-link">
   Cz
+</a></li><li class="dropdown-item"><!----> <a href="/stella/study/ws.html" class="nav-link">
+  ws
 </a></li></ul></div></div><div class="nav-item"><a href="/stella/resume.html" class="nav-link">
   Resume
 </a></div><div class="nav-item"><a href="https://github.com/StellaYangF/StellaYangF.github.io" target="_blank" rel="noopener noreferrer" class="nav-link external">
@@ -581,6 +585,6 @@ methods<span class="token punctuation">.</span><span class="token function">forE
     dependArray<span class="token punctuation">,</span>
 <span class="token punctuation">}</span>
 </code></pre></div></div> <h3 id="总结"><a href="#总结" class="header-anchor">#</a> 总结</h3> <ul><li>数据劫持实现，用到 <code>Object.defineProperty</code> 支持 IE8</li> <li>数据进来不要多级嵌套，递归性能消耗</li> <li>对象新增属性无法监控</li></ul> <p><code>watch</code> vs <code>computed</code></p> <ul><li>二者都是在内部 <code>new Watcher</code></li> <li><code>computed</code> 计算属性默认不执行，当依赖值变化后，更新 <code>dirty</code> 为 <code>true</code>，数据不变，就不会重新计算值，有缓存。</li> <li><code>watch</code> 不能放在模板，通常放监控的逻辑。</li></ul></div> <footer class="page-edit"><!----> <!----></footer> <!----> </main></div><div class="global-ui"></div></div>
-    <script src="/stella/assets/js/app.abcd69d5.js" defer></script><script src="/stella/assets/js/2.15e74eba.js" defer></script><script src="/stella/assets/js/14.ccbd8300.js" defer></script><script src="/stella/assets/js/3.9e759294.js" defer></script>
+    <script src="/stella/assets/js/app.98f33409.js" defer></script><script src="/stella/assets/js/2.15e74eba.js" defer></script><script src="/stella/assets/js/14.ccbd8300.js" defer></script><script src="/stella/assets/js/3.cfe91906.js" defer></script>
   </body>
 </html>
