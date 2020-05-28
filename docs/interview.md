@@ -231,14 +231,18 @@ self.addEventListener('fetch', function (e) {
 
 ush Cache 其实是 HTTP/2 的 Push 功能所带来的。简言之，过去一个 HTTP 的请求连接只能传输一个资源，而现在你在请求一个资源的同时，服务端可以为你“推送”一些其他资源 —— 你可能在在不久的将来就会用到一些资源。例如，你在请求 www.sample.com 时，服务端不仅发送了页面文档，还一起推送了 关键 CSS 样式表。这也就避免了浏览器收到响应、解析到相应位置时才会请求所带来的延后。
 
+<highlight>
+
+::: slot default
 ```html
-<p>
-  Page: Hey example.com, can I have your homepage please? 10:24
-  Server: Sure thing! Oh, but while I'm sending you that, here's a stylesheet, some images, some JavaScript, and some JSON. 10:24
-  Page: Uh, sure.10:24
-  Page: I'm just reading the HTML here, and it looks like I'm going to need a stylesh… oh it's the one you're already sending me, cool!10:25
-</p>
+Page: Hey example.com, can I have your homepage please? 10:24
+Server: Sure thing! Oh, but while I'm sending you that, here's a stylesheet, some images, some JavaScript, and some JSON. 10:24
+Page: Uh, sure.10:24
+Page: I'm just reading the HTML here, and it looks like I'm going to need a stylesh… oh it's the one you're already sending me, cool!10:25
 ```
+
+:::
+</highlight>
 
 参考:
 [HTTP/2 push is tougher than I thought](https://jakearchibald.com/2017/h2-push-tougher-than-i-thought/)
@@ -246,15 +250,22 @@ ush Cache 其实是 HTTP/2 的 Push 功能所带来的。简言之，过去一�
 ### 发送请求
 
 - 避免多余重定向
-  重定向分为 301 的永久重定向和 302 的临时重定向。建议贴合语义，例如服务迁移的情况下，使用 301 重定向。对 SEO 也会更友好。
-- DNS 预解析
-  `<link rel="dns-prefetch" href="//yourwebsite.com">`
-- 预先建立连接
-  `<link rel="preconnect" href="//sample.com" crossorigin>`
-- 使用 CDN
-  静态资源，我们可以考虑通过 CDN 来降低时延。
+  
+  重定向分为 301 的永久重定向和 302 的临时重定向。
+  
+  建议贴合语义，例如服务迁移的情况下，使用 301 重定向。对 SEO 也会更友好。
 
-### 服务端相应
+- DNS 预解析
+  
+  `<link rel="dns-prefetch" href="//yourwebsite.com">`
+
+- 预先建立连接
+  
+  `<link rel="preconnect" href="//sample.com" crossorigin>`
+
+- 使用 CDN 静态资源，我们可以考虑通过 CDN 来降低时延。
+
+### 服务端响应
 
 - 使用流进行响应
 - 业务聚合 NodeJS 
@@ -265,6 +276,83 @@ ush Cache 其实是 HTTP/2 的 Push 功能所带来的。简言之，过去一�
   - 闭包导致的内存泄漏；
   - CPU 密集型任务导致事件循环 delay 严重；
   - 未捕获的异常导致进程频繁退出，守护进程（pm2/supervisor）又将进程重启，这种频繁的启停也会比较消耗资源；
+
+### 页面解析与处理
+
+要注意的点：
+
+- 注意资源在页面文档中的位置
+  - HTML 解析为 DOM Tree，CSS 解析为 CSSOM，两者再合成 Render Tree，并行执行，非常完美。然而，当 JavaScript 入场之后，局面就变了：
+  - 根据标准规范，在 JavaScript 中可以访问 DOM。因此当遇到 JavaScript 后会阻塞 DOM 的解析。于此同时，为避免 CSS 与 JavaScript 之间的竞态，CSSOM 的构建会阻塞 JavaScript 的脚本执行。总结起来就是 ——
+
+  - JavaScript 会阻塞 DOM 构建，而 CSSOM 的构建又回阻塞 JavaScript 的执行。
+
+- 使用 defer 和 async
+  - 两者都会防止 JavaScript 脚本的下载阻塞 DOM 构建
+  - defer 会在 HTML 解析完成后，按照脚本出现的次序再顺序执行；
+  - async 则是下载完成就立即开始执行，同时阻塞页面解析，不保证脚本间的执行顺序。
+  - 推荐在一些与主业务无关的 JavaScript 脚本上使用 async。例如统计脚本、监控脚本、广告脚本等。这些脚本一般都是一份独立的文件，没有外部依赖，不需要访问 DOM，也不需要有严格的执行时机限制。在这些脚本上使用 async 可以有效避免这些非核心功能的加载影响页面解析速度。
+
+- 页面文档压缩
+
+### 页面静态资源
+
+#### JavaScript
+
+- 减少不必要的请求
+  - 代码拆分（code split）与按需加载
+    - webpack or [RequireJS](https://requirejs.org/)
+  - 代码合并
+- 减少包体大小
+  - 代码压缩
+    - uglify, production 模式下默认开始，将变量替换为短命名、去掉多余的换行符等方式
+    - 文本压缩算法 gzip，Content-Encoding: gzip
+  - Tree Shaking
+    - optimization.usedExports: [] | boolean
+    - package.json.sideEffects
+    - 通过检测源码中不会被使用到的部分，将其删除，从而减小代码的体积
+
+    <highlight>
+
+    :::slot default
+    ```js
+    // 模块 A
+    export function add(a, b) {
+        return a + b;
+    }
+
+    export function minus(a, b) {
+        return a - b;
+    }
+
+    // 模块 B
+    import {add} from 'module.A.js';
+    console.log(add(1, 2));
+    ```
+    :::
+    </highlight>
+
+    > 上面的代码中使用了 ESM 规范的模块语法，而没有使用 CommonJS
+    Tree Shaking 算是一种静态分析，而 ESM 本身是一种的静态的模块化规范，所有依赖可以在编译期确定
+  - 优化 polyfill 的使用
+    - 用于在非兼容浏览器上也能使用新特性的 API。后续升级不用改动业务代码，只需要删除相应的 polyfill 即可。
+    - [browserslist](https://github.com/browserslist/browserslist)
+  - webpack
+    -  webpack-bundle-analyzer 这个工具来查看打包代码里面各个模块的占用大小。
+    - [一些建议可以帮助你减小 bundle 的体积](https://github.com/GoogleChromeLabs/webpack-libs-optimizations)
+- 解析与执行
+除了 JavaScript 下载需要耗时外，脚本的解析与执行也是会消耗时间的
+  -  JavaScript 的解析耗时
+  - 避免 Long Task
+  - 针对代码的优化
+- 缓存
+  -  发布与部署
+    - [大公司里怎样开发和部署前端代码？](https://www.zhihu.com/question/20790576/answer/32602154)
+  - 将基础库代码打包合并
+  - 减少 webpack 编译不当带来的缓存失效
+    - 使用 Hash 来替代自增 ID
+    - 将 runtime chunk 单独拆分出来
+    - 使用 records
 
 ### 首屏加载
 
