@@ -367,6 +367,30 @@ Page: I'm just reading the HTML here, and it looks like I'm going to need a styl
 - Service Worker缓存文件处理
 - 使用link标签的rel属性设置 prefetch（这段资源将会在未来某个导航或者功能要用到，但是本资源的下载顺序权重比较低，prefetch通常用于加速下一次导航）、preload（preload将会把资源得下载顺序权重提高，使得关键数据提前下载好，优化页面打开速度）
 
+## CSS
+
+### :root 伪类选择器
+
+`:root` 这个 `CSS` 伪类匹配文档树的根元素。对于 `HTML` 来说，`:root` 表示 `<html>` 元素，除了优先级更高之外，与 `html` 选择器相同。
+
+### 示例
+
+在声明全局 CSS 变量时 :root 会很有用：
+
+<highlight>
+
+:::slot default
+```css
+:root {
+  --main-color: hotpink;
+  --pane-padding: 5px 42px;
+  --card-skeleton: linear-gradient(lightgrey var(--card-height), transparent 0);
+}
+```
+:::
+</highlight>
+
+
 ## Sass
 
 一款成熟、稳定、强大的专业级 **CSS 扩展语言**，能兼容 CSS 语法
