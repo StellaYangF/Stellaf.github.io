@@ -367,3 +367,292 @@ Page: I'm just reading the HTML here, and it looks like I'm going to need a styl
 - Service Worker缓存文件处理
 - 使用link标签的rel属性设置 prefetch（这段资源将会在未来某个导航或者功能要用到，但是本资源的下载顺序权重比较低，prefetch通常用于加速下一次导航）、preload（preload将会把资源得下载顺序权重提高，使得关键数据提前下载好，优化页面打开速度）
 
+## Sass
+
+一款成熟、稳定、强大的专业级 **CSS 扩展语言**，能兼容 CSS 语法
+
+### 安装使用
+
+**下载**
+`sass` 基于 `Ruby` 语言开发而成，因此安装 `sass` 前需要 [安装 Ruby](http://rubyinstaller.org/downloads)。（注:mac下自带Ruby无需在安装Ruby!）
+
+> npm i sass
+
+**编译**
+> sass input.scss output.css
+
+**监听**
+> sass --watch input.scss:output.css
+监听整个目录
+sass --watch app/sass:public/stylesheets
+
+
+### 特性 
+
+#### 使用变量
+> $ 符号标识变量，比如：$highlight-color
+
+  - 声明变量
+  - 变量引用
+  - 下划线或中划线均可
+
+<highlight>
+
+:::slot default
+```sass
+$link-color: blue;
+a {
+  color: $link_color;
+}
+
+//编译后
+
+a {
+  color: blue;
+}
+```
+:::
+</highlight>
+
+#### 嵌套 CSS 规则
+
+<highlight>
+
+:::slot default
+:::
+```sass
+#content {
+  article {
+    h1 { color: #333 }
+    p { margin-bottom: 1.4em }
+  }
+  aside { background-color: #EEE }
+}
+
+ /* 编译后 */
+#content article h1 { color: #333 }
+#content article p { margin-bottom: 1.4em }
+#content aside { background-color: #EEE }
+```
+</highlight>
+
+**父元素选择器标识符&**
+
+<highlight>
+
+:::slot default
+```sass
+article a {
+  color: blue;
+  &:hover { color: red }
+}
+
+// 编译后
+article a { color: blue }
+article a:hover { color: red }
+```
+:::
+</highlight>
+
+**群组选择器的嵌套**
+
+<highlight>
+
+:::slot default
+```sass
+nav, aside {
+  a {color: blue}
+}
+
+// 编译后
+nav a, aside a {color: blue}
+```
+:::
+</highlight>
+
+**子组合选择器和同层组合选择器：>、+和~**
+
+<highlight>
+
+:::slot default
+```sass
+article {
+  ~ article { border-top: 1px dashed #ccc }
+  > section { background: #eee }
+  dl > {
+    dt { color: #333 }
+    dd { color: #555 }
+  }
+  nav + & { margin-top: 0 }
+}
+
+// 编译后
+article ~ article { border-top: 1px dashed #ccc }
+article > footer { background: #eee }
+article dl > dt { color: #333 }
+article dl > dd { color: #555 }
+nav + article { margin-top: 0 }
+```
+:::
+</highlight>
+
+**嵌套属性**
+
+<highlight>
+
+:::slot default
+```sass
+nav {
+  border: 1px solid #ccc {
+  left: 0px;
+  right: 0px;
+  }
+}
+
+// 编译后
+nav {
+  border: 1px solid #ccc;
+  border-left: 0px;
+  border-right: 0px;
+}
+```
+:::
+</highlight>
+
+#### 导入SASS文件
+
+使用sass的@import规则并不需要指明被导入文件的全名。你可以省略.sass或.scss文件后缀
+
+**使用SASS部分文件**
+
+sass局部文件的文件名以下划线开头。这样，sass就不会在编译时单独编译这个文件输出css，而只把这个文件用作导入
+
+举例来说，你想导入themes/_night-sky.scss这个局部文件里的变量，你只需在样式表中写@import "themes/night-sky";。
+
+**默认变量值**
+
+反复声明一个变量，只有最后一处声明有效且它会覆盖前边的值
+
+
+**嵌套导入**
+
+<highlight>
+
+:::slot default
+```sass
+.blue-theme {@import "blue-theme"}
+
+//生成的结果跟你直接在.blue-theme选择器内写_blue-theme.scss文件的内容完全一样。
+
+.blue-theme {
+  aside {
+    background: blue;
+    color: #fff;
+  }
+}
+```
+:::
+</highlight>
+
+#### 混合器
+
+通过sass的混合器实现大段样式的重用。
+
+关键字 `@mixin` className, `@include` className
+
+<highlight>
+
+:::slot default
+```sass
+@mixin rounded-corners {
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
+  border-radius: 5px;
+}
+
+notice {
+  background-color: green;
+  border: 2px solid #00aa00;
+  @include rounded-corners;
+}
+
+
+// 编译后
+.notice {
+  background-color: green;
+  border: 2px solid #00aa00;
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
+  border-radius: 5px;
+}
+```
+:::
+</highlight>
+
+**混合器传参**
+
+用法：
+`@mixin className(arg1, arg2, ...)`
+
+`@include className(param1, parma2, ...)`
+
+<highlight>
+
+:::slot default
+```sass
+@mixin link-colors($normal, $hover, $visited) {
+  color: $normal;
+  &:hover { color: $hover; }
+  &:visited { color: $visited; }
+}
+
+a {
+  @include link-colors(blue, red, green);
+}
+
+
+// 编译后
+a { color: blue; }
+a:hover { color: red; }
+a:visited { color: green; }
+```
+:::
+</highlight>
+
+> sass 允许通过语法` $name: value` 的形式指定每个参数的值。这种形式的传参，参数顺序就不必再在乎了，只需要保证没有漏掉参数即可：
+
+<highlight>
+
+:::slot default
+```sass
+a {
+    @include link-colors(
+      $normal: blue,
+      $visited: green,
+      $hover: red
+  );
+}
+```
+:::
+</highlight>
+
+#### 使用选择器继承来精简CSS
+
+关键字 `@extend`
+
+<highlight>
+
+:::slot default
+```sass
+//通过选择器继承继承样式
+.error {
+  border: 1px solid red;
+  background-color: #fdd;
+}
+.seriousError {
+  @extend .error;
+  border-width: 3px;
+}
+```
+:::
+</highlight>
