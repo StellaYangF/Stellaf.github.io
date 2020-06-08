@@ -94,7 +94,7 @@ map.get('title') // "Author"
 (function (a, b = 1, c) {}).length // 1
 ```
 
-#### 作用域
+#### 参数作用域
 
 - 一旦设置了参数的默认值，函数进行声明初始化时，参数会形成一个单独的作用域（context）。
 - 等到初始化结束，这个作用域就会消失。
@@ -329,3 +329,114 @@ what:
 - cookie不是很安全，别人可以分析存放在本地的COOKIE并进行COOKIE欺骗 考虑到安全应当使用session
 - session会在一定时间内保存在服务器上。当访问增多，会比较占用你服务器的性能 考虑到减轻服务器性能方面,应当使用COOKIE
 - 单个 cookie 保存的数据不能超过 4K，很多浏览器都限制一个站点最多保存20个 cookie
+
+## 执行上下文
+
+函数执行时，会创建一个执行环境，即执行上下文（execution context），执行上下文创建一个 Variable Object 变量对象，存储基础类型数据和引用类型数据的在堆中存储的地址
+
+```js
+ExecutionContest = {
+  VO: {
+    a: 'xxx',
+
+  }
+}
+```
+
+### 多个执行上下文
+
+JS 代码在执行的时候，会进入一个执行上下文，可理解为当前代码运行环境
+
+### 分类
+
+- 全局执行上下文：浏览器创建，window
+- 函数执行上下文环境
+
+### 执行栈
+
+- 多个执行上下文，JS 引擎有栈来管理
+- LIFO 后进先出
+- 栈底永远是全局上下文
+- 新开启一个函数执行时，会省
+
+### 执行上下文生命周期
+
+两个阶段：
+
+- 创建
+  - 创建 VO
+  - 创建 scopeChain
+  - 确定 this 指向
+- 执行
+  - 变量赋值
+  -  函数赋值
+  - 执行
+
+### 激活对象
+
+变量对象会保存：
+
+- 变量声明（var）
+- 函数参数（arguments）
+- 函数定义（function）
+  - 表达式 let xx = function(){}
+  - 声明 function xx(){} 优先级更高
+
+#### VO
+
+VO：Activation Object
+
+在函数的调用栈中，如果当前执行上下文处于函数调用栈的顶端，则意味着当前上下文处于激活状态，此时变量对象称为活动对象(AO,Activation Object) VO=>AO
+活动变量包含变量对象所有的属性，并有包含 this 指针
+
+```js
+function one(m) {
+    function two() {
+        console.log('two');
+    }
+}
+one(1);
+
+//执行阶段 VO=>AO
+let VO = AO = {
+    m:1,
+    two: () => { console.log('two'); },
+
+}
+let oneEC={
+    VO,
+    this: window,
+    scopeChain:[VO,globalVO]
+}
+```
+
+## 作用域
+
+JS 中，作用域是用来规定变量访问范围的规则
+
+### 作用域链
+
+作用域链是由当前执行环境与上层执行环境的一系列变量对象组成的，它保证了当前执行环境对符合访问权限的变量和函数的有序访问。
+
+区分：
+
+- 在函数创建时 确定
+- this 是在当前执行上下文在执行栈顶时，确定
+
+## new 原理
+
+new调用时，自动执行的四步操作:
+
+- 创建(或者说构造)一个全新的对象
+- 这个对象会被执行[[原型]]链接
+- 这个新对象会绑定到函数调用的this
+- 如果函数没有返回其他对象，那么new表达式中的函数调用会自动返回这个新对象
+
+```js
+function mockNew(className, ..args) {
+  let obj = {};
+ obj = Object.create(className.prototype);
+ let result = className.call(obj, ...args);
+ return result ? result : obj;
+}
+```
