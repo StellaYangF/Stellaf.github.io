@@ -1,1 +1,0 @@
-(window.webpackJsonp=window.webpackJsonp||[]).push([[4],{355:function(n,t,e){},437:function(n,t,e){"use strict";var s=e(355);e.n(s).a},442:function(n,t,e){"use strict";e.r(t);var s={name:"skeleton"},a=(e(437),e(28)),c=Object(a.a)(s,(function(){var n=this.$createElement;return(this._self._c||n)("div",{staticClass:"card"})}),[],!1,null,null,null);t.default=c.exports}}]);
