@@ -41,9 +41,6 @@ module.exports = [
       },{
         text: 'ws',
         link: '/study/ws',
-      },{
-        text: 'interview',
-        link: '/study/interview',
       }
     ],
   },
