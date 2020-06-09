@@ -548,4 +548,36 @@ GET /index.html
 
 ## WebSocket
 
+[参考](http://www.ruanyifeng.com/blog/2017/05/websocket.html)
+
 对比 HTTP 有个缺陷：通信只能由客户端发起
+
+用法:
+
+- ws.onopen
+- ws.onmessage
+- ws.send
+- ws.onerror
+- ws.bufferedAmount
+- wx.onclose
+- ws.readyState
+  - CONNECTING 0 正在连接
+  - ONPEN 1 连接成功，可通信
+  - CLOSING 2 正在关闭
+  - CLOSED 3 已关闭 or 打开连接失败
+
+加密：wss://域名:80/443
+
+bi-directional messages
+
+## 网络断开连接
+
+检测 DNS 解析
+修复
+
+- 打开网络和共享中心
+- 更改适配器设置
+- 本地连接
+  - 右键
+  - 诊断
+  - 修复
