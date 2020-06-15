@@ -18,7 +18,7 @@
     "@commitlint/config-conventional": "^8.3.4",
     "cz-conventional-changelog": "^3.2.0",
     "husky": "^4.2.5",
-    "vuepress": "^1.4.0"  
+    "vuepress": "^1.4.0"
   },
   "dependencies": {
     "@stella2/xj-ui": "^0.2.6",
