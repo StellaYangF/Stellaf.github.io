@@ -6,6 +6,15 @@ sidebar: auto
 
 ## DOM 事件
 
+### 事件捕获 & 事件冒泡
+
+**顺序**：先捕获，后冒泡
+
+- **捕获**：【又外向内】某父级元素及其内部元素，绑定同类型事件如：click 时，会先触发该父级元素捕获事件，在触发当前点击元素的事件绑定
+- **冒泡**：【由内向外】，运用于事件委托，常见为列表事件，取代为每个列表 (li) 元素绑定事件为列表父元素 (ul) 绑定
+
+**开启事件捕获**：element.addEventListener(eventName, callback, true)，第三个参数传入 `true`，即可开启捕获。
+
 ### DOMContentLoaded VS load
 
 - `当初始的 HTML` 文档被完全加载和解析完成之后，`DOMContentLoaded` 事件被触发，而无需等待**样式表**、**图像**和**子框架**的完全加载。
@@ -21,9 +30,9 @@ sidebar: auto
 ```js
 <link rel="stylesheet" href="css.css">
 <script>
-document.addEventListener('DOMContentLoaded',function(){
-    console.log('3 seconds passed');
-});
+  document.addEventListener('DOMContentLoaded',function(){
+      console.log('3 seconds passed');
+  });
 </script>
 ```
 
