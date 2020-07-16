@@ -1,3 +1,7 @@
+---
+sidebar: auto
+---
+
 # Webpack Hand-written
 
 ## webpack-cli
@@ -16,6 +20,10 @@ webpack-cli 既可以通过 cli 命令行，也可通过脚本形式调用 webpa
 
 ### 实现
 
+<highlight>
+
+::: slot default
+
   ```js
   const webpack = require('webpack');
   const options = require('./webpack.config');
@@ -33,6 +41,8 @@ webpack-cli 既可以通过 cli 命令行，也可通过脚本形式调用 webpa
       console.log(JSON.stringify(json, null, 2));
   })
   ```
+:::
+</highlight>
 
 ## webpack
 
@@ -68,6 +78,10 @@ webpack 内部提供了多个插件，用于增强 compiler 的功能，同时�
 
 NodeEnvironmentPlugin 为 compiler 增加读写功能
 
+<highlight>
+
+::: slot default
+
   ```js
   const fs = require('fs');
 
@@ -83,10 +97,18 @@ NodeEnvironmentPlugin 为 compiler 增加读写功能
 
   module.exports = NodeEnvironmentPlugin;
   ```
+:::
+</highlight>
+
 
 ### WebpackOptionsApply
 
 提供 process 方法，内部统一挂载 webpack 内置的插件
+
+<highlight>
+
+::: slot default
+
   ```js
   const EntryOptionPlugin = require('./EntryOptionPlugin');
 
@@ -99,10 +121,17 @@ NodeEnvironmentPlugin 为 compiler 增加读写功能
   module.exports = WebpackOptionsApply;
   ```
 
+:::
+</highlight>
+
 ### EntryOptionPlugin
 
 内部监听了 entryOptions 钩子函数，执行回调内部，新建 **SingleEntryPlugin** 实
 例
+
+<highlight>
+
+::: slot default
 
   ```js
   const SingleEntryPlugin = require("./SingleEntryPlugin");
@@ -120,9 +149,17 @@ NodeEnvironmentPlugin 为 compiler 增加读写功能
   module.exports = EntryOptionPlugin;
   ```
 
+:::
+</highlight>
+
+
 ### SingleEntryPlugin
 
 内部监听 make 事件，这个插件比较重要，compiler.compiler 启动编译时，会触发这个 make 监听的钩子函数
+
+<highlight>
+
+::: slot default
 
   ```js
   class SingleEntryPlugin {
@@ -153,7 +190,15 @@ NodeEnvironmentPlugin 为 compiler 增加读写功能
   module.exports = SingleEntryPlugin;
   ```
 
+:::
+</highlight>
+
+
 下面是 compiler.compile 内部触发的部分代码
+
+<highlight>
+
+::: slot default
 
   ```js
   this.hooks.compile.call(params);
@@ -166,3 +211,6 @@ NodeEnvironmentPlugin 为 compiler 增加读写功能
       onCompiled(err, compilation);
   })
   ```
+
+:::
+</highlight>
