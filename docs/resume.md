@@ -8,6 +8,7 @@ sidebar: auto
 
 * 姓名： 杨凡
 * 学历：本科
+* 电话：15827059667
 * 电子邮箱：188761973@qq.com
 * 求职意向：Web 前端
 * 开源 UI 库：https://stellaf2.github.io/
