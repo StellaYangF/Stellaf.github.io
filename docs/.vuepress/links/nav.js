@@ -41,6 +41,9 @@ module.exports = [
       },{
         text: 'ws',
         link: '/study/ws',
+      },{
+        text: 'webpack',
+        link: '/study/webpack',
       }
     ],
   },

@@ -7,13 +7,13 @@ sidebar: auto
 
 
 * 姓名： 杨凡
-* 性别： 女
 * 学历：本科
 * 电子邮箱：188761973@qq.com
 * 求职意向：Web 前端
+* 开源 UI 库：https://stellaf2.github.io/
 * Github：https://github.com/StellaYangF
-* 掘金：https://juejin.im/user/5d6dc0dbf265da03951a0f1c
 * 博客：https://stellayangf.github.io/stella/
+* 掘金：https://juejin.im/user/5d6dc0dbf265da03951a0f1c
 
 
 ## 专业技能
@@ -38,14 +38,13 @@ sidebar: auto
     - 参与团队设计云平台脚手架的设计
     - 参与制定团队的代码风格规范和 Git 提交规范
 
-### 广州福斯特科技有限公司
+### 武汉巨人培训学校
 
-- 在职时间：2018.12.27 - 2019.05.07
-- 职位名称：Web 前端
+- 在职时间：2015.07 - 2018.06
+- 职位名称：英语教师
 - 工作描述：
-    - 基于 jQuery, Bootstrap 技术开发教学平台
-    - 兼容主流浏览器
-    - 持续优化, 维护, 修复 Bug 
+    - 教授初、高中英语课程，提升学生升学考试成绩
+    - 与学生家长沟通学生学习情况，开公开课招生
 
 ## 项目经历
 
