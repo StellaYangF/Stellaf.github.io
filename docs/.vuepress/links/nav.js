@@ -46,10 +46,6 @@ module.exports = [
         link: '/study/webpack',
       }
     ],
-  },
-  {
-    text: "Resume",
-    link: "/resume",
   },{
     text: 'GitHub',
     link: 'https://github.com/StellaYangF/StellaYangF.github.io',
